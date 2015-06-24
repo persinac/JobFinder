@@ -38,15 +38,19 @@
             this.txtLocation = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.indeedDetailsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmpDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.locDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.url = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.viewed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.applied = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.levelOfInterest = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtYearsExp = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmpDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.locDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.indeedDetailsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.txtNumOfPagesToSearch = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.indeedDetailsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -141,9 +145,46 @@
             this.dataGridView1.TabIndex = 9;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // indeedDetailsBindingSource
+            // url
             // 
-            this.indeedDetailsBindingSource.DataSource = typeof(IndeedDetails);
+            this.url.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.url.DataPropertyName = "url";
+            this.url.HeaderText = "url";
+            this.url.Name = "url";
+            // 
+            // viewed
+            // 
+            this.viewed.DataPropertyName = "viewed";
+            this.viewed.HeaderText = "viewed";
+            this.viewed.Name = "viewed";
+            // 
+            // applied
+            // 
+            this.applied.DataPropertyName = "applied";
+            this.applied.HeaderText = "applied";
+            this.applied.Name = "applied";
+            // 
+            // levelOfInterest
+            // 
+            this.levelOfInterest.DataPropertyName = "levelOfInterest";
+            this.levelOfInterest.HeaderText = "levelOfInterest";
+            this.levelOfInterest.Name = "levelOfInterest";
+            // 
+            // txtYearsExp
+            // 
+            this.txtYearsExp.Location = new System.Drawing.Point(402, 41);
+            this.txtYearsExp.Name = "txtYearsExp";
+            this.txtYearsExp.Size = new System.Drawing.Size(94, 22);
+            this.txtYearsExp.TabIndex = 10;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(285, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 17);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Up to years exp:";
             // 
             // titleDataGridViewTextBoxColumn
             // 
@@ -172,36 +213,35 @@
             this.countryDataGridViewTextBoxColumn.HeaderText = "country";
             this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
             // 
-            // url
+            // indeedDetailsBindingSource
             // 
-            this.url.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.url.DataPropertyName = "url";
-            this.url.HeaderText = "url";
-            this.url.Name = "url";
+            this.indeedDetailsBindingSource.DataSource = typeof(IndeedDetails);
             // 
-            // viewed
+            // txtNumOfPagesToSearch
             // 
-            this.viewed.DataPropertyName = "viewed";
-            this.viewed.HeaderText = "viewed";
-            this.viewed.Name = "viewed";
+            this.txtNumOfPagesToSearch.Location = new System.Drawing.Point(691, 40);
+            this.txtNumOfPagesToSearch.Name = "txtNumOfPagesToSearch";
+            this.txtNumOfPagesToSearch.Size = new System.Drawing.Size(50, 22);
+            this.txtNumOfPagesToSearch.TabIndex = 12;
             // 
-            // applied
+            // label5
             // 
-            this.applied.DataPropertyName = "applied";
-            this.applied.HeaderText = "applied";
-            this.applied.Name = "applied";
-            // 
-            // levelOfInterest
-            // 
-            this.levelOfInterest.DataPropertyName = "levelOfInterest";
-            this.levelOfInterest.HeaderText = "levelOfInterest";
-            this.levelOfInterest.Name = "levelOfInterest";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(524, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(165, 17);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Num of pages to Search:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(902, 524);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtNumOfPagesToSearch);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtYearsExp);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtLocation);
@@ -213,6 +253,7 @@
             this.Controls.Add(this.btnURLSubmit);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.indeedDetailsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -240,6 +281,10 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn viewed;
         private System.Windows.Forms.DataGridViewCheckBoxColumn applied;
         private System.Windows.Forms.DataGridViewTextBoxColumn levelOfInterest;
+        private System.Windows.Forms.TextBox txtYearsExp;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtNumOfPagesToSearch;
+        private System.Windows.Forms.Label label5;
     }
 }
 

@@ -15,38 +15,39 @@ namespace HttpWinFrom
     public partial class Form1 : Form
     {
         int start = 10;
+        int pagesToSearch = 1;
         string main_url = "";
         MyWebRequest mwr;
         List<IndeedDetails> data;
         List<IndeedDetails> jobsToKeep;
         BindingList<IndeedDetails> mainJobList;
+        Utility util;
 
         public Form1()
         {
             InitializeComponent();
+            util = new Utility();
             mainJobList = new BindingList<IndeedDetails>();
             string file_name = @"C:\Users\apersinger\Documents\Misc\jsonjobs.txt";
-            if(System.IO.File.Exists(file_name) == true) {
-                System.IO.StreamReader objReader;
-                objReader = new System.IO.StreamReader(file_name);
-                string retVal = objReader.ReadToEnd();
-                var serializer = new JavaScriptSerializer();
-                data = serializer.Deserialize<List<IndeedDetails>>(retVal);
+            string file_contents = util.OpenFile(file_name);
+            if(file_contents.Length > 0) {
+                data = util.DeserializeString(file_contents);
                 mainJobList = new BindingList<IndeedDetails>(data);
                 dataGridView1.DataSource = mainJobList;
-                dataGridView1.Refresh();
             }
             
             txtURL.Text = "www.indeed.com";
             txtLocation.Text = "california";
             txtJobTitle.Text = "software";
+            
             btnFilterResults.Enabled = false;
         }
 
         private void btnURLSubmit_Click(object sender, EventArgs e)
         {
             string url = "";
-
+            pagesToSearch = Int32.Parse(txtNumOfPagesToSearch.Text.ToString());
+            pagesToSearch *= 10;
             this.start = 10;
             dataGridView1.DataSource = mainJobList;
             data = new List<IndeedDetails>();
@@ -78,39 +79,15 @@ namespace HttpWinFrom
             /*
              * Need main list of jobs, and set that grid data source to that
              * */
-            Utility util = new Utility();
+            string new_page = "";
             data = mwr.GetListOfJobs();
             List<String> listOfStrings_exp = new List<String>();
             List<int> jobsToRemove = new List<int>();
             for (int i = 0; i < data.Count; i++)
             {
-                bool shouldKeep = false;
-                string new_res = mwr.GetSpecificResponse(txtURL.Text.ToString() + "/rc/clk?jk=" + data[i].jk);
+                new_page = mwr.GetSpecificResponse(txtURL.Text.ToString() + "/rc/clk?jk=" + data[i].jk);
                 data[i].url = txtURL.Text.ToString() + "/rc/clk?jk=" + data[i].jk;
-                listOfStrings_exp = util.FilterExperience(new_res);
-                //within those strings, find years of experience
-                for (int j = 0; j < listOfStrings_exp.Count; j++)
-                {
-                    if (listOfStrings_exp[j].IndexOf("0") > -1 ||
-                        listOfStrings_exp[j].IndexOf("1") > -1 ||
-                        listOfStrings_exp[j].IndexOf("2") > -1)
-                    {
-                        //keep
-                        shouldKeep = true;
-                    }
-                    else if (listOfStrings_exp[j].IndexOf("3") > -1 ||
-                      listOfStrings_exp[j].IndexOf("4") > -1 ||
-                      listOfStrings_exp[j].IndexOf("5") > -1 ||
-                        listOfStrings_exp[j].IndexOf("6") > -1 ||
-                        listOfStrings_exp[j].IndexOf("7") > -1 ||
-                        listOfStrings_exp[j].IndexOf("8") > -1 ||
-                        listOfStrings_exp[j].IndexOf("9") > -1)
-                    {
-                        shouldKeep = false;
-                        break;
-                    }
-                }
-                if (shouldKeep == false)
+                if (util.FilterExperience(new_page, Int32.Parse(txtYearsExp.Text.ToString())) == false)
                 {
                     jobsToRemove.Add(i);
                 }
@@ -120,7 +97,8 @@ namespace HttpWinFrom
             AddToMainList(jobsToKeep);
             mwr = new MyWebRequest(this.main_url + "&start=" + this.start);
             string temp = mwr.GetResponse();
-            if (this.start == 50)
+            
+            if (this.start == pagesToSearch)
             {
                 FinishUp();
             }
@@ -135,9 +113,9 @@ namespace HttpWinFrom
 
         private void FinishUp() {
             dataGridView1.DataSource = this.mainJobList;
-            Utility util = new Utility();
-            var json = new JavaScriptSerializer().Serialize(this.mainJobList);
+            var json = util.SerializeObject(this.mainJobList);
             util.WriteToFile(json.ToString());
+            btnFilterResults.Enabled = false;
             Console.WriteLine("fin");
         }
 
@@ -163,7 +141,15 @@ namespace HttpWinFrom
         {
             string text = "";
             text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            Process.Start(@"" + text);
+            if(dataGridView1.Columns[e.ColumnIndex].Name == "url") {
+                Process.Start(@"" + text);
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var json = util.SerializeObject(this.mainJobList);
+            if (json != null) { util.WriteToFile(json.ToString()); }
         }
     }
 }

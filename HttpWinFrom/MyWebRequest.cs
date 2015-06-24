@@ -96,8 +96,7 @@ namespace HttpWinFrom
             // Read the content fully up to the end.
             string responseFromServer = reader.ReadToEnd();
             string retVal = util.ParseURL(this.url, responseFromServer);
-            var serializer = new JavaScriptSerializer();
-            data = serializer.Deserialize<List<IndeedDetails>>(retVal);
+            data = util.DeserializeString(retVal);
             responseFromServer = retVal;
             // Clean up the streams.
             reader.Close();
