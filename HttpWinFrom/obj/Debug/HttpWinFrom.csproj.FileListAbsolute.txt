@@ -1,0 +1,11 @@
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.Form1.resources
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.Properties.Resources.resources
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.csproj.GenerateResource.Cache
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\bin\Debug\HttpWinFrom.exe.config
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\bin\Debug\HttpWinFrom.exe
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\bin\Debug\HttpWinFrom.pdb
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\bin\Debug\Newtonsoft.Json.dll
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\bin\Debug\Newtonsoft.Json.xml
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.exe
+C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.pdb
+C:\Users\apersinger\documents\visual studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.csprojResolveAssemblyReference.cache
