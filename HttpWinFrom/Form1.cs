@@ -143,9 +143,19 @@ namespace HttpWinFrom
 
         private void AddToMainList(List<IndeedDetails> newListOfJobs)
         {
-            for (int i = 0; i < newListOfJobs.Count; i++ )
+            foreach (var new_jk in newListOfJobs)
             {
-                mainJobList.Add(newListOfJobs[i]);
+                bool already_exists = false;
+                foreach (var existing_jk in mainJobList)
+                {
+                    if (new_jk.jk == existing_jk.jk)
+                    {
+                        already_exists = true;
+                    }
+                }
+                if(already_exists != true) {
+                    mainJobList.Add(new_jk);
+                }
             }
         }
 

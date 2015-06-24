@@ -8,3 +8,4 @@ C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom
 C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinForm.csproj.GenerateResource.Cache
 C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.exe
 C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.pdb
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinForm.csprojResolveAssemblyReference.cache
