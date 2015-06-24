@@ -1,0 +1,10 @@
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\bin\Debug\HttpWinFrom.exe.config
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\bin\Debug\HttpWinFrom.exe
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\bin\Debug\HttpWinFrom.pdb
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\bin\Debug\Newtonsoft.Json.dll
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\bin\Debug\Newtonsoft.Json.xml
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.Form1.resources
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.Properties.Resources.resources
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinForm.csproj.GenerateResource.Cache
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.exe
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.pdb

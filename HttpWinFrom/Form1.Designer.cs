@@ -38,12 +38,15 @@
             this.txtLocation = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.indeedDetailsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmpDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.locDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.url = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.indeedDetailsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.viewed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.applied = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.levelOfInterest = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.indeedDetailsBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -125,7 +128,10 @@
             this.cmpDataGridViewTextBoxColumn,
             this.locDataGridViewTextBoxColumn,
             this.countryDataGridViewTextBoxColumn,
-            this.url});
+            this.url,
+            this.viewed,
+            this.applied,
+            this.levelOfInterest});
             this.dataGridView1.DataSource = this.indeedDetailsBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView1.Location = new System.Drawing.Point(0, 133);
@@ -134,6 +140,10 @@
             this.dataGridView1.Size = new System.Drawing.Size(902, 391);
             this.dataGridView1.TabIndex = 9;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // indeedDetailsBindingSource
+            // 
+            this.indeedDetailsBindingSource.DataSource = typeof(IndeedDetails);
             // 
             // titleDataGridViewTextBoxColumn
             // 
@@ -169,9 +179,23 @@
             this.url.HeaderText = "url";
             this.url.Name = "url";
             // 
-            // indeedDetailsBindingSource
+            // viewed
             // 
-            this.indeedDetailsBindingSource.DataSource = typeof(IndeedDetails);
+            this.viewed.DataPropertyName = "viewed";
+            this.viewed.HeaderText = "viewed";
+            this.viewed.Name = "viewed";
+            // 
+            // applied
+            // 
+            this.applied.DataPropertyName = "applied";
+            this.applied.HeaderText = "applied";
+            this.applied.Name = "applied";
+            // 
+            // levelOfInterest
+            // 
+            this.levelOfInterest.DataPropertyName = "levelOfInterest";
+            this.levelOfInterest.HeaderText = "levelOfInterest";
+            this.levelOfInterest.Name = "levelOfInterest";
             // 
             // Form1
             // 
@@ -213,6 +237,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn locDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn url;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn viewed;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn applied;
+        private System.Windows.Forms.DataGridViewTextBoxColumn levelOfInterest;
     }
 }
 

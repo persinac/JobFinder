@@ -23,4 +23,8 @@ public class IndeedDetails
     public string title { set; get; }
     public string zip { set; get; }
     public string url { set; get; }
+    public bool viewed { set; get; }
+    public bool applied { set; get; }
+    public int levelOfInterest { set; get; }
+
 }

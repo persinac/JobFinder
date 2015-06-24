@@ -38,6 +38,8 @@ namespace HttpWinFrom
             }
             
             txtURL.Text = "www.indeed.com";
+            txtLocation.Text = "california";
+            txtJobTitle.Text = "software";
             btnFilterResults.Enabled = false;
         }
 

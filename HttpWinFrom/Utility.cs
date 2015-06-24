@@ -33,10 +33,31 @@ namespace HttpWinFrom
             string removeNewlines = Regex.Replace(removeJobMap, "\n", "");
             string replaceSemiColons = Regex.Replace(removeNewlines, ";", ",");
             replaceSemiColons = replaceSemiColons.Substring(0, replaceSemiColons.Length - 1);
+            
+            replaceSemiColons = AddCustomFieldsToJSONString(replaceSemiColons);
             replaceSemiColons = "[" + replaceSemiColons + "]";
 
             //final json string
             return replaceSemiColons;
+        }
+
+        /**
+         * Adds: viewed, applied, and level of interest to the json string
+         * 
+         **/
+        public string AddCustomFieldsToJSONString(string json_str)
+        {
+            string temp_string = json_str;
+            string holder = "";
+
+            string final_string = "";
+            //need to find each '}', and insert my fields before that
+            while(temp_string.Length > 0) {
+                holder = temp_string.Substring(0, temp_string.IndexOf("}") - 1);
+                temp_string = temp_string.Substring(temp_string.IndexOf("}") + 1);
+                final_string += holder + "',applied:'false',viewed:'false',levelOfInterest:1}";
+            }
+            return final_string;
         }
 
         public List<String> FilterExperience(string str)

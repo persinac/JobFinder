@@ -9,3 +9,6 @@ C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFro
 C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.exe
 C:\Users\apersinger\Documents\Visual Studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.pdb
 C:\Users\apersinger\documents\visual studio 2013\Projects\HttpWinFrom\HttpWinFrom\obj\Debug\HttpWinFrom.csprojResolveAssemblyReference.cache
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\bin\Debug\HttpWinFrom.exe.config
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.exe
+C:\Users\apersinger\Documents\GitHub\JobFinder\HttpWinFrom\obj\Debug\HttpWinFrom.pdb
