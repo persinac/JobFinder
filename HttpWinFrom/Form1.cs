@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
@@ -22,12 +23,22 @@ namespace HttpWinFrom
         List<IndeedDetails> jobsToKeep;
         BindingList<IndeedDetails> mainJobList;
         Utility util;
+        BackgroundWorker worker;
+        private bool _isRunning;
 
         public Form1()
         {
             InitializeComponent();
             util = new Utility();
             mainJobList = new BindingList<IndeedDetails>();
+            
+            //worker stuff
+            worker = new BackgroundWorker();
+
+            worker.DoWork += BackgroundWorkerDoWork;
+            worker.RunWorkerCompleted +=
+               BackgroundWorkerRunWorkerCompleted;
+            
             string file_name = @"C:\Users\apersinger\Documents\Misc\jsonjobs.txt";
             string file_contents = util.OpenFile(file_name);
             if(file_contents.Length > 0) {
@@ -42,6 +53,8 @@ namespace HttpWinFrom
             
             btnFilterResults.Enabled = false;
         }
+
+        
 
         private void btnURLSubmit_Click(object sender, EventArgs e)
         {
@@ -71,6 +84,7 @@ namespace HttpWinFrom
 
         private void btnFilterResults_Click(object sender, EventArgs e)
         {
+            //worker.RunWorkerAsync();
             FilterMe();
         }
 
@@ -87,7 +101,8 @@ namespace HttpWinFrom
             {
                 new_page = mwr.GetSpecificResponse(txtURL.Text.ToString() + "/rc/clk?jk=" + data[i].jk);
                 data[i].url = txtURL.Text.ToString() + "/rc/clk?jk=" + data[i].jk;
-                if (util.FilterExperience(new_page, Int32.Parse(txtYearsExp.Text.ToString())) == false)
+                
+                if (util.FilterExperience(HtmlRemoval.StripTagsRegex(new_page), Int32.Parse(txtYearsExp.Text.ToString()), data[i]) == false)
                 {
                     jobsToRemove.Add(i);
                 }
@@ -132,7 +147,7 @@ namespace HttpWinFrom
                     }
                 }
                 if(already_exists != true) {
-                    mainJobList.Add(new_jk);
+                    this.mainJobList.Add(new_jk);
                 }
             }
         }
@@ -150,6 +165,18 @@ namespace HttpWinFrom
         {
             var json = util.SerializeObject(this.mainJobList);
             if (json != null) { util.WriteToFile(json.ToString()); }
+        }
+
+        void BackgroundWorkerDoWork(object sender,
+                    DoWorkEventArgs e)
+        {
+            _isRunning = true;
+            FilterMe();
+        }
+
+        private void BackgroundWorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _isRunning = false;
         }
     }
 }

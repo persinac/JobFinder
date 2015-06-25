@@ -60,15 +60,19 @@ namespace HttpWinFrom
             return final_string;
         }
 
-        public Boolean FilterExperience(string html, int years)
+        public Boolean FilterExperience(string html, int years, IndeedDetails job)
         {
+            int count = 0;
+            bool accept = true;
             List<String> listOfStrings = new List<String>();
-            for (int i = 0; i < experience_keywords.Length; i++)
+            if (html.IndexOf("interns") < 0 &&
+                        html.IndexOf("Page Unavailable") < 0)
             {
-                if (html.IndexOf(experience_keywords[i]) > -1)
+                for (int i = 0; i < experience_keywords.Length; i++)
                 {
-                    if(html.IndexOf("intern") < 0) 
+                    if (html.IndexOf(experience_keywords[i]) > -1)
                     {
+
                         string temp_string = html;
                         string search_string = "";
                         int temp_index = temp_string.IndexOf(experience_keywords[i]);
@@ -121,33 +125,64 @@ namespace HttpWinFrom
                             temp_string = temp_string.Substring(temp_index + 1);
                             temp_index = temp_string.IndexOf(experience_keywords[i]);
                         } //while loop
-                    } //if intern 
-                } //if keyword
-            } //for loop through keywords
-            int count = 0;
-            bool accept = true;
+                    }  //if keyword
+                } //for loop through keywords
+            }
+            else { accept = false; }//if intern
+            
+            Console.WriteLine("Company: "+job.cmp);
             while(count < listOfStrings.Count && accept == true) 
             {
                 accept = FilterYearsOfExp(listOfStrings[count], years);
+                Console.WriteLine("listOfStrings[" + count + "]: " + listOfStrings[count] + ", accpet: " + accept);
                 count++;
             }
+            Console.WriteLine("Company: " + job.cmp + " accept? " + accept);
             return accept;
         }
 
         public bool FilterYearsOfExp(String strToSearch, int yearsUpTo)
         {
             bool shouldKeep = true;
-            string resultString = Regex.Match(strToSearch, @"\d+").Value;
-            if (resultString.Length > 0) 
+            bool checkNextNumber = true; //used for scenarios like: 2-4 years
+            MatchCollection matches = Regex.Matches(strToSearch, @"\d+");
+            try { 
+            // Report on each match. 
+            foreach (Match match in matches)
             {
-                int resultInt = Int32.Parse(resultString);
-                if (resultInt > yearsUpTo)
+                GroupCollection groups = match.Groups;
+                String isPlusOrMinus = strToSearch.Substring(match.Index+1, 1);
+                String hasYears = strToSearch.Substring(match.Index, 10);
+                int resultInt = Int32.Parse(match.Value);
+                if (resultInt < 25) //ignore anything over 20 (years, salary)
                 {
-                    //don't keep
-                    shouldKeep = false;
+                    if(checkNextNumber == true) {
+                        if (isPlusOrMinus == "+" || isPlusOrMinus == "-")
+                        {
+                            if (isPlusOrMinus == "-") { checkNextNumber = false; }
+                            if (hasYears.IndexOf("yrs") > 0 || hasYears.IndexOf("year") > 0)
+                            {
+                                if (resultInt > yearsUpTo) { shouldKeep = false; }
+                            }
+                        }
+                        else if (hasYears.IndexOf("yrs") > 0 || hasYears.IndexOf("year") > 0)
+                        {
+                            if (resultInt > yearsUpTo) { shouldKeep = false; }
+                        }
+                        //else
+                        //{
+                        //    shouldKeep = false;
+                        //}
+                    }
                 }
+
             }
-            
+            }
+            catch (ArgumentOutOfRangeException aor)
+            {
+                Console.WriteLine("Argument out of range exception: " + aor.Message);
+            }
+
             return shouldKeep;
         }
 
