@@ -21,17 +21,20 @@ namespace HttpWinFrom
         MyWebRequest mwr;
         List<IndeedDetails> data;
         List<IndeedDetails> jobsToKeep;
+        List<IndeedDetails> filtered;
         BindingList<IndeedDetails> mainJobList;
         Utility util;
         BackgroundWorker worker;
         private bool _isRunning;
+        private GridSortBy sortKeeper;
 
         public Form1()
         {
             InitializeComponent();
             util = new Utility();
             mainJobList = new BindingList<IndeedDetails>();
-            
+            filtered = new List<IndeedDetails>();
+            sortKeeper = new GridSortBy();
             //worker stuff
             worker = new BackgroundWorker();
 
@@ -155,9 +158,27 @@ namespace HttpWinFrom
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             string text = "";
-            text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            if(dataGridView1.Columns[e.ColumnIndex].Name == "url") {
-                Process.Start(@"" + text);
+            if (e.RowIndex > -1)
+            {
+                text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "url")
+                {
+                    Process.Start(@"" + text);
+                }
+
+                //if user clicks on chk box or something AFTER they filter...
+                if (filtered.Count > 0)
+                {
+                    if (dataGridView1.Columns[e.ColumnIndex].Name == "viewed")
+                    {
+                        bool value = Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                        if(value == true) { value = false;  }
+                        else {  value = true; }
+                        filtered[e.RowIndex].viewed = value;
+                        
+                    }
+                    Utility.UpdateMainList(filtered[e.RowIndex], ref this.mainJobList);
+                }
             }
         }
 
@@ -178,5 +199,176 @@ namespace HttpWinFrom
         {
             _isRunning = false;
         }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridViewColumn newColumn = dataGridView1.Columns[e.ColumnIndex];
+            List<IndeedDetails> ordered = new List<IndeedDetails>();
+            
+            bool descend = false;
+
+            if (newColumn.Name == "levelOfInterest")
+            {
+
+                ordered = sortKeeper.levelOfInterest ? (from element in this.mainJobList
+                               orderby element.levelOfInterest descending
+                               select element).ToList() : (from element in this.mainJobList
+                               orderby element.levelOfInterest
+                               select element).ToList();
+                sortKeeper.levelOfInterest = sortKeeper.levelOfInterest ? false : true;
+            }
+            else if (newColumn.Name == "applied")
+            {
+
+                ordered = sortKeeper.applied ? (from element in this.mainJobList
+                                                orderby element.applied descending
+                                                        select element).ToList() : (from element in this.mainJobList
+                                                                                    orderby element.applied
+                                                                                    select element).ToList();
+                sortKeeper.applied = sortKeeper.applied ? false : true;
+            }
+            else if (newColumn.Name == "viewed")
+            {
+                ordered = sortKeeper.viewed ? (from element in this.mainJobList
+                                               orderby element.viewed descending
+                                                select element).ToList() : (from element in this.mainJobList
+                                                                            orderby element.viewed
+                                                                            select element).ToList();
+                sortKeeper.viewed = sortKeeper.viewed ? false : true;
+            }
+            else if (newColumn.Name == "country")
+            {
+                ordered = sortKeeper.country ? (from element in this.mainJobList
+                                                orderby element.country descending
+                                               select element).ToList() : (from element in this.mainJobList
+                                                                           orderby element.country
+                                                                           select element).ToList();
+                sortKeeper.country = sortKeeper.country ? false : true;
+            }
+            else if (newColumn.Name == "loc")
+            {
+                ordered = sortKeeper.loc ? (from element in this.mainJobList
+                                            orderby element.loc descending
+                                                select element).ToList() : (from element in this.mainJobList
+                                                                            orderby element.loc
+                                                                            select element).ToList();
+                sortKeeper.loc = sortKeeper.loc ? false : true;
+            }
+            else if (newColumn.Name == "cmp")
+            {
+                ordered = sortKeeper.cmp ? (from element in this.mainJobList
+                                            orderby element.cmp descending
+                                            select element).ToList() : (from element in this.mainJobList
+                                                                        orderby element.cmp
+                                                                        select element).ToList();
+                sortKeeper.cmp = sortKeeper.cmp ? false : true;
+            }
+            else if (newColumn.Name == "title")
+            {
+                ordered = sortKeeper.title ? (from element in this.mainJobList
+                                              orderby element.title descending
+                                            select element).ToList() : (from element in this.mainJobList
+                                                                        orderby element.title
+                                                                        select element).ToList();
+                sortKeeper.title = sortKeeper.title ? false : true;
+            }
+            else if (newColumn.Name == "qualified")
+            {
+                ordered = sortKeeper.qualified ? (from element in this.mainJobList
+                                              orderby element.qualified descending
+                                              select element).ToList() : (from element in this.mainJobList
+                                                                          orderby element.qualified
+                                                                          select element).ToList();
+                sortKeeper.qualified = sortKeeper.qualified ? false : true;
+            }
+            else if (newColumn.Name == "clearance")
+            {
+                ordered = sortKeeper.clearance ? (from element in this.mainJobList
+                                                  orderby element.clearance descending
+                                              select element).ToList() : (from element in this.mainJobList
+                                                                          orderby element.clearance
+                                                                          select element).ToList();
+                sortKeeper.clearance = sortKeeper.clearance ? false : true;
+            }
+            if (ordered.Count > 0) {
+                dataGridView1.DataSource = null;
+                this.mainJobList = new BindingList<IndeedDetails>(ordered);
+                dataGridView1.DataSource = this.mainJobList;
+            }
+            dataGridView1.Refresh();
+        }
+
+        private void btnApplyCriteria_Click(object sender, EventArgs e)
+        {
+
+            if (this.mainJobList.Count > 0)
+            {
+                //qualified for:
+                if(chkQualYes.Checked == true || 
+                    chkQualNo.Checked == true ||
+                    chkQualIDK.Checked == true)
+                {
+                    filtered = (from element in this.mainJobList
+                                where element.qualified == "Yes"
+                                select element).ToList();
+                    
+                }
+                //requires clearance
+
+                //level of interest
+            }
+
+            if (filtered.Count > 0)
+            {
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = filtered;
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            //reset the chk boxes
+            chkQualYes.Checked = false;
+            chkQualNo.Checked = false;
+            chkQualIDK.Checked = false;
+            chkDNRqrClearance.Checked = false;
+            chkRqrClearance.Checked = false;
+
+            //reset level of interest
+            cboMinLoI.SelectedIndex = 0;
+
+            //reset grid datasource
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = this.mainJobList;
+
+            //reset filtered
+            filtered = new List<IndeedDetails>();
+        }
+    }
+
+    public class GridSortBy
+    {
+        public bool cmp { set; get; }
+        public bool country { set; get; }
+        public bool loc { set; get; }
+        public bool title { set; get; }
+        public bool viewed { set; get; }
+        public bool applied { set; get; }
+        public bool levelOfInterest { set; get; }
+        public bool qualified { set; get; }
+        public bool clearance { set; get; }
+
+        public GridSortBy()
+        {
+            cmp = false;
+            country = false;
+            loc = false;
+            title = false;
+            viewed = false;
+            applied = false;
+            levelOfInterest = false;
+            qualified = false;
+            clearance = false;
+        } 
     }
 }

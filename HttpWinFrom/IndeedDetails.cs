@@ -26,5 +26,34 @@ public class IndeedDetails
     public bool viewed { set; get; }
     public bool applied { set; get; }
     public int levelOfInterest { set; get; }
+    public string qualified { set; get; }
+    public bool clearance { set; get; }
+
+    public void Copy(IndeedDetails item)
+    {
+        this.applied = item.applied;
+        this.city = item.city;
+        this.clearance = item.clearance;
+        this.cmp = item.cmp;
+        this.cmpesc = item.cmpesc;
+        this.cmpid = item.cmpid;
+        this.cmplnk = item.cmplnk;
+        this.country = item.country;
+        this.efccid = item.efccid;
+        this.jk = item.jk;
+        this.levelOfInterest = item.levelOfInterest;
+        this.loc = item.loc;
+        this.locid = item.locid;
+        this.num = item.num;
+        this.qualified = item.qualified;
+        this.rd = item.rd;
+        this.srcid = item.srcid;
+        this.srcname = item.srcname;
+        this.title = item.title;
+        this.url = item.url;
+        this.viewed = item.viewed;
+        this.zip = item.zip;
+
+    }
 
 }
